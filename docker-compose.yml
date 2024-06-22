@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  beauty_salon_app_backend:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    image: beauty_salon_app_backend
+    container_name: beauty_salon_app_backend
+    working_dir: /var/www/api-server
+    volumes:
+      - .:/var/www/api-server
+      - ./docker/dev/nginx/logs:/var/log/nginx
+      - ./docker/dev/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 9000:9000
+    networks:
+      - beauty_salon_app_api_server
+
+  db:
+    image: mysql:8.0
+    platform: "linux/amd64"
+    container_name: beauty_salon_app_db
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+      - --group_concat_max_len=10000000
+    environment:
+      MYSQL_DATABASE: beauty_salon
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_USER: user
+      TZ: "Asia/Tokyo"
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - beauty_salon_app_api_server
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: beauty_salon_app_phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - 8091:80
+    depends_on:
+      - db
+    networks:
+      - beauty_salon_app_api_server
+
+networks:
+  beauty_salon_app_api_server:
+    external: true
+
+volumes:
+  db_data:

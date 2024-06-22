@@ -1,0 +1,43 @@
+{
+  "name": "beauty_salon_app_backend",
+  // ターゲットのdocker-compose.ymlファイル
+  "dockerComposeFile":"../docker-compose.yml",
+  // 開発環境のコンテナ
+  "service": "beauty_salon_app_backend",
+  // コンテナ作成時に開くフォルダ
+  "workspaceFolder": "/var/www/api-server",
+
+  // コンテナ内でのVscodeの拡張機能
+  "extensions": [
+      // for PHP
+      "bmewburn.vscode-intelephense-client",
+      // for laravel
+      "amiralizadeh9480.laravel-extra-intellisense",
+      "xdebug.php-debug",
+      // PHP formatter
+      "junstyle.php-cs-fixer",
+      // for Git
+      "mhutchie.git-graph",
+      "eamodio.gitlens",
+      // markdown extensions
+      "yzhang.markdown-all-in-one",
+      "bierner.markdown-mermaid",
+      "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
+      // GitHub extensions
+      "GitHub.copilot",
+      "GitHub.copilot-chat",
+      "GitHub.vscode-pull-request-github",
+      "github.vscode-github-actions",
+      // database extensions (SQL and NoSQL)
+      "cweijan.vscode-database-client2",
+      // Others
+      "mikestead.dotenv",
+      "mrmlnc.vscode-apache",
+      "formulahendry.code-runner",
+      "42Crunch.vscode-openapi",
+      // PHPUnit
+      "recca0120.vscode-phpunit"
+  ],
+
+  "forwardPorts": [9000],
+}
